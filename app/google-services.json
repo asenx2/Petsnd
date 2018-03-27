@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "251582532051",
+    "firebase_url": "https://petsnd-9258b.firebaseio.com",
+    "project_id": "petsnd-9258b",
+    "storage_bucket": "petsnd-9258b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:251582532051:android:2fae7db5fef1fe31",
+        "android_client_info": {
+          "package_name": "com.asenjo.petsnd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "251582532051-t6e1ssgckncpcc4126k48qdt5tmjqqq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.asenjo.petsnd",
+            "certificate_hash": "6ece250599640afd617b7d3fda80eab5483ab2fd"
+          }
+        },
+        {
+          "client_id": "251582532051-4ettrqmlu6crjh3i56u0cdn2no3k3d2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpKYoH1QhBsvb_qGEctYtTVIPAHgQ2-UM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "251582532051-4ettrqmlu6crjh3i56u0cdn2no3k3d2u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
