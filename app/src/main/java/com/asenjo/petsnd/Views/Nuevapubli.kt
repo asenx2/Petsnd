@@ -112,6 +112,10 @@ class Nuevapubli : AppCompatActivity() {
                         //añadir la publicación a la base de datos
                         val uploadId = mDatabase!!.push().key
                         mDatabase!!.child(uploadId).setValue(upload)
+
+                        //al realizar la subida, volver a la vista mainrv
+                        val intent = Intent(this, Mainrv::class.java)
+                        startActivity(intent)
                     }
                     .addOnFailureListener { exception ->
                         //si se produce un fallo se muestra la tostada con el error y se detiene el dialogo de progreso
@@ -124,7 +128,7 @@ class Nuevapubli : AppCompatActivity() {
                         progressDialog.setMessage("Subido " + progress.toInt() + "%...")
                     }
         } else {
-            //si no se ha seleccionado ninguna imagen
+            //si no se ha seleccionado ninguna imagen, no se muestra
             Toast.makeText(applicationContext, "No se ha seleccionado ninguna imagen", Toast.LENGTH_LONG).show()
         }
     }
