@@ -33,7 +33,8 @@
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Views.Nuevapubli"/>
+            android:name=".Views.Nuevapubli"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Views.ImageFull"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_register.*
  * Created by Asenjo on 28/03/2018.
  */
 //clase que van a heredar Register y Login para no sobrecargar de métodos ambas clases
+//aqui estan los metodos para crear una cuenta, acceder con una cuenta ya creada y cerrar sesion
 open class AuthFunctions : DialogClass() {
     companion object {
         var TAG = "***tagreglog***"

@@ -10,7 +10,6 @@ import android.widget.Button
 import com.asenjo.petsnd.R
 import com.asenjo.petsnd.Views.Login
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_misdatos.*
 
 class Misdatos : Fragment() {
 
@@ -19,11 +18,8 @@ class Misdatos : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //instanciar para cerrar la sesion del usuario
         mAuth = FirebaseAuth.getInstance()
-
-        //cuando cojo el boton de la view no me abre la vista con las tabs
-
-        //btnout = activity.findViewById(R.id.btnout) as Button
 
     }
 
@@ -32,15 +28,17 @@ class Misdatos : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater!!.inflate(R.layout.activity_misdatos, container, false)
 
-//        var btnout = activity.findViewById(R.id.btnout) as Button
-//
-//        btnout.setOnClickListener(View.OnClickListener {
-//            signout()
-//        })
+        //para coger el boton dentro de un fragmento hay que hacerlo mediante findViewById
+        //si lo hago mediante las extension de synthetic la activity no se abre
+        val btnout = rootView.findViewById(R.id.btnout) as Button
+        btnout.setOnClickListener(View.OnClickListener {
+            signout()
+        })
 
         return rootView
     }
 
+    //funcion para cerrar sesion y volver a la pantalla inicial
     private fun signout() {
         mAuth!!.signOut()
         val intent = Intent(context,Login::class.java)

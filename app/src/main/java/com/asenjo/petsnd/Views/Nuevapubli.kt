@@ -39,8 +39,6 @@ class Nuevapubli : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nuevapubli)
 
-        supportActionBar!!.setTitle("Nueva publicación")
-
         storageReference = FirebaseStorage.getInstance().reference
         //decir a database en qué lista guardar la informacion que le paso
         mDatabase = FirebaseDatabase.getInstance().getReference("publicaciones")
