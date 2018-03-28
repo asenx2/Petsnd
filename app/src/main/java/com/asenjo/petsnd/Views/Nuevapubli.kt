@@ -39,6 +39,8 @@ class Nuevapubli : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nuevapubli)
 
+        supportActionBar!!.setTitle("Nueva publicación")
+
         storageReference = FirebaseStorage.getInstance().reference
         //decir a database en qué lista guardar la informacion que le paso
         mDatabase = FirebaseDatabase.getInstance().getReference("publicaciones")
@@ -110,9 +112,6 @@ class Nuevapubli : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Imagen subida", Toast.LENGTH_LONG).show()
 
                         //crear el objeto publicacion con los datos de los edit text y la url de la imagen subida
-
-                        //HAY QUE INCLUIR EL NOMBRE DEL UPLOADER CUANDO ESTÉ HECHO EL LOGEO
-
                         val upload = Publicacion(nameUser,etTituloUp.text.toString().trim { it <= ' ' },etDescUp.text.toString() ,Date(),taskSnapshot.downloadUrl!!.toString())
 
                         //añadir la publicación a la base de datos

@@ -126,8 +126,7 @@ class Detail : AppCompatActivity() {
                             //añadir al if para que no se pueda insertar un comentario con espacios
                             longToast("El comentario no puede estar vacío")
                         else
-                            //utilizo al usuario dimitri para poder instertar el comentario
-                            //despues del login, guardar el nombre del usuario para usarlo aquí
+                            //crear nuevo comentario con el usuario registrado y los demás valores recogidos
                             refCom.push().setValue(Comentario(Date(),nameUser,pubclick.titulo,pubclick.fechaupload,etComent.text.toString()))
                     }
                     positiveButton("Cerrar") {}

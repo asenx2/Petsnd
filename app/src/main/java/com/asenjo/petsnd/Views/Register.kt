@@ -3,11 +3,10 @@ package com.asenjo.petsnd.Views
 import android.os.Bundle
 import android.view.View
 import com.asenjo.petsnd.R
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_register.*
 
 //Activity para registrarse por primera vez en la app. Auth con email y contraseña
-class Register : RegisterLogin() {
+class Register : AuthFunctions() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,14 +1,12 @@
 package com.asenjo.petsnd.Views
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.asenjo.petsnd.R
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
-class Login : RegisterLogin() {
+class Login : AuthFunctions() {
 
     //activity para logearse mediante authentication firebase
     override fun onCreate(savedInstanceState: Bundle?) {

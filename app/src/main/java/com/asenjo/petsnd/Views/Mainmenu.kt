@@ -42,16 +42,11 @@ class Mainmenu : AppCompatActivity() {
             this.startActivity(intent)
         })
 
-        //con el ultimo boton muestro el perfil de usuario
-        //ésta activity tendrá tabs para mostrar diferente informacion:
-        //-mis datos personales
-        //-mis publicaciones, donde podré borrarlas. así el uploader es el unico que puede borrar sus publicaciones mediante longclick
-        //-etc...
-
-//        btnPerf.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(this,Perfil::class.java)
-//            this.startActivity(intent)
-//        })
+        //con el ultimo boton muestro la información del usuario registrado
+        btnPerf.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this,Perfiltabs::class.java)
+            this.startActivity(intent)
+        })
     }
 
     //funcion para salir de la aplicacion cuando esté en el menú (lo que indica que ya me he registrado y no quiero ir al login)

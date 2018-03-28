@@ -13,13 +13,12 @@ import kotlinx.android.synthetic.main.activity_register.*
  * Created by Asenjo on 28/03/2018.
  */
 //clase que van a heredar Register y Login para no sobrecargar de métodos ambas clases
-open class RegisterLogin : DialogClass() {
+open class AuthFunctions : DialogClass() {
     companion object {
         var TAG = "***tagreglog***"
     }
 
     var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-
 
 
     //funcion para crear nueva cuenta. FUNCIONA CORRECTAMENTE
@@ -37,6 +36,10 @@ open class RegisterLogin : DialogClass() {
                     if (task.isSuccessful) {
                         // Si me he registrado vuelvo al login y muestro toast
                         Log.d(TAG, "createUserWithEmail:success")
+
+                        //si no cierro la sesion siempre que lo abro se muestra el login en primer lugar
+                        signout()
+                        //mostrar toast si se ha registrado y volver al login para introducir los datos
                         Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this,Login::class.java))
                         val user = mAuth!!.currentUser
