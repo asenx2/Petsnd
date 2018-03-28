@@ -37,6 +37,9 @@ open class RegisterLogin : DialogClass() {
                     if (task.isSuccessful) {
                         // Si me he registrado vuelvo al login y muestro toast
                         Log.d(TAG, "createUserWithEmail:success")
+
+                        //si no cierro la sesion siempre que lo abro se muestra el login en primer lugar
+                        signout()
                         Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this,Login::class.java))
                         val user = mAuth!!.currentUser
