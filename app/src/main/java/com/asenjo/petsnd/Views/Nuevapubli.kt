@@ -10,6 +10,7 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import com.asenjo.petsnd.Model.Publicacion
 import com.asenjo.petsnd.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -28,6 +29,11 @@ class Nuevapubli : AppCompatActivity() {
 
     private lateinit var storageReference: StorageReference
     private lateinit var mDatabase: DatabaseReference
+
+    //coger el nombre de la autenticacion y recortar hasta el @
+    private var mAuth: FirebaseAuth? = FirebaseAuth.getInstance()
+    val currentUser = mAuth!!.currentUser
+    val nameUser = currentUser!!.email!!.toString().substringBefore('@', currentUser.email.toString())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,7 +113,7 @@ class Nuevapubli : AppCompatActivity() {
 
                         //HAY QUE INCLUIR EL NOMBRE DEL UPLOADER CUANDO ESTÉ HECHO EL LOGEO
 
-                        val upload = Publicacion("BenitoUploader",etTituloUp.text.toString().trim { it <= ' ' },etDescUp.text.toString() ,Date(),taskSnapshot.downloadUrl!!.toString())
+                        val upload = Publicacion(nameUser,etTituloUp.text.toString().trim { it <= ' ' },etDescUp.text.toString() ,Date(),taskSnapshot.downloadUrl!!.toString())
 
                         //añadir la publicación a la base de datos
                         val uploadId = mDatabase!!.push().key

@@ -1,25 +1,25 @@
 package com.asenjo.petsnd.Views
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.asenjo.petsnd.R
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_register.*
 
-//Activity para registrarse por primera vez en la app. Con authentication con en el foro.
-//Hablar con carlos para que me diga qué tuvo que hacer para el foro además de usar los metodos apropiados
-class Register : AppCompatActivity() {
+//Activity para registrarse por primera vez en la app. Auth con email y contraseña
+class Register : RegisterLogin() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        //instancia del auth
+//        mAuth = FirebaseAuth.getInstance()
+
         //si pulso en el boton me manda al login de nuevo y se intenta registrar el usuario
         btnRegister.setOnClickListener(View.OnClickListener {
-            //Toast.makeText(this,"El usuario se ha registrado correctamente",Toast.LENGTH_LONG)
-            val intent = Intent(this,Login::class.java)
-            this.startActivity(intent)
+            createAccount(etMailReg.text.toString(),etPassReg.text.toString())
         })
     }
+
 }

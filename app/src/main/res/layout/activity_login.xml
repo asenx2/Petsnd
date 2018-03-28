@@ -49,7 +49,7 @@
             android:textColor="@android:color/black" />
 
         <EditText
-            android:id="@+id/etMail"
+            android:id="@+id/etMailLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -63,7 +63,7 @@
             android:textColor="@android:color/black" />
 
         <EditText
-            android:id="@+id/etPass"
+            android:id="@+id/etPassLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

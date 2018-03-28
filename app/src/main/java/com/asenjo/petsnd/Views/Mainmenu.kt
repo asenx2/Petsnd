@@ -5,9 +5,14 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.asenjo.petsnd.R
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_mainmenu.*
+import android.widget.Toast
 
 class Mainmenu : AppCompatActivity() {
+
+    private var backButtonCount: Int = 0
+    private lateinit var mAuth: FirebaseAuth
 
     //activity con el menu para ir a las diferentes pantallas
     //hay que convertir esta activity en la inicial al abrir la app una vez que el usuario se haya registrado
@@ -15,6 +20,8 @@ class Mainmenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mainmenu)
+
+        mAuth = FirebaseAuth.getInstance()
 
         //con el boton nuevo muestro la pantalla para añadir una nueva publicacion
         btnNueva.setOnClickListener(View.OnClickListener {
@@ -45,5 +52,18 @@ class Mainmenu : AppCompatActivity() {
 //            val intent = Intent(this,Perfil::class.java)
 //            this.startActivity(intent)
 //        })
+    }
+
+    //funcion para salir de la aplicacion cuando esté en el menú (lo que indica que ya me he registrado y no quiero ir al login)
+    override fun onBackPressed() {
+        if (backButtonCount >= 1) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_HOME)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Vuelve a pulsar para cerrar la aplicación", Toast.LENGTH_SHORT).show()
+            backButtonCount++
+        }
     }
 }
