@@ -5,14 +5,19 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.asenjo.petsnd.R
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
-class Login : AppCompatActivity() {
+class Login : RegisterLogin() {
 
     //activity para logearse mediante authentication firebase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        //comprobar si hay un usuario registrado para abrir la app en el menu
+        val currentUser = mAuth!!.currentUser
+        checkUser(currentUser)
 
         //boton para ir a la activity para registrarse
         tvRegister.setOnClickListener(View.OnClickListener {
@@ -22,8 +27,7 @@ class Login : AppCompatActivity() {
 
         //si pulso en el boton y ya existe el usuario me manda al menu
         btnEnter.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this,Mainmenu::class.java)
-            this.startActivity(intent)
+            signIn(etMailLog.text.toString(), etPassLog.text.toString())
         })
     }
 }

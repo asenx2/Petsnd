@@ -10,6 +10,7 @@ import com.asenjo.petsnd.Adapters.AdapterComentarios
 import com.asenjo.petsnd.Model.Comentario
 import com.asenjo.petsnd.Model.Publicacion
 import com.asenjo.petsnd.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.content_detail.*
@@ -26,6 +27,11 @@ class Detail : AppCompatActivity() {
     private lateinit var adapter: AdapterComentarios
     private lateinit var refCom: DatabaseReference
     private lateinit var pubclick: Publicacion
+
+    //coger el nombre de la autenticacion y recortar hasta el @
+    private var mAuth: FirebaseAuth? = FirebaseAuth.getInstance()
+    val currentUser = mAuth!!.currentUser
+    val nameUser = currentUser!!.email!!.toString().substringBefore('@', currentUser.email.toString())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,7 +128,7 @@ class Detail : AppCompatActivity() {
                         else
                             //utilizo al usuario dimitri para poder instertar el comentario
                             //despues del login, guardar el nombre del usuario para usarlo aquí
-                            refCom.push().setValue(Comentario(Date(),"dimitri",pubclick.titulo,pubclick.fechaupload,etComent.text.toString()))
+                            refCom.push().setValue(Comentario(Date(),nameUser,pubclick.titulo,pubclick.fechaupload,etComent.text.toString()))
                     }
                     positiveButton("Cerrar") {}
                 }

@@ -56,7 +56,7 @@
                 android:textColor="@android:color/black" />
 
             <EditText
-                android:id="@+id/etMail"
+                android:id="@+id/etMailReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -70,21 +70,7 @@
                 android:textColor="@android:color/black" />
 
             <EditText
-                android:id="@+id/etPass1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPassword" />
-
-            <TextView
-                android:id="@+id/tv3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Vuelve a escribir la contraseña:"
-                android:textColor="@android:color/black" />
-
-            <EditText
-                android:id="@+id/etPass2"
+                android:id="@+id/etPassReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
