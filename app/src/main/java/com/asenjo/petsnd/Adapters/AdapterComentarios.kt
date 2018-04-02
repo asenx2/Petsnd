@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.asenjo.petsnd.Model.Comentario
 import kotlinx.android.synthetic.main.rowcom.view.*
+import java.text.SimpleDateFormat
 
 /**
  * Created by asenjo on 26/03/18.
@@ -37,7 +38,7 @@ class AdapterComentarios(val context: Context,
 
         fun bind(dataItem: Comentario, position: Int){
             itemView.tvautor.text = dataItem.autor
-            itemView.tvfechacom.text = dataItem.fechapubli.toString()
+            itemView.tvfechacom.text = SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(dataItem.fechapubli)
             itemView.tvcomentario.text = dataItem.textocomentario
         }
 
