@@ -7,21 +7,40 @@
     android:layout_height="match_parent"
     tools:context="com.asenjo.petsnd.Fragments.Misdatos">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ivprofile"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Mis datos personales" />
+        android:layout_marginTop="35dp"
+        android:src="@drawable/noimage"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
 
     <Button
         android:id="@+id/btnout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
+        android:layout_marginBottom="90dp"
         android:text="CERRAR SESIÓN" />
+
+    <TextView
+        android:id="@+id/tvalta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvalta"
+        android:layout_below="@+id/tvalta"
+        android:layout_marginTop="29dp"
+        android:text="TextView" />
 
 </RelativeLayout>

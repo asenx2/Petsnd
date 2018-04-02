@@ -6,10 +6,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.asenjo.petsnd.Model.Publicacion
 import com.asenjo.petsnd.Views.Detail
+import com.google.firebase.database.DatabaseReference
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.rowpub.view.*
+import java.util.*
 
 /**
  * Created by asenjo on 26/03/2018.
@@ -49,6 +52,7 @@ class AdapterPublis(val context: Context,
             itemView.setOnClickListener(View.OnClickListener {
                 onItemClick(dataItem)
             })
+
         }
 
         //Al pulsar en una publicación viajo a la vista detalle de la misma, donde se muestran sus comentarios,

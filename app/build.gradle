@@ -43,7 +43,11 @@ dependencies {
     // imagenes network picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    //rounded image
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }
+
 
 
 

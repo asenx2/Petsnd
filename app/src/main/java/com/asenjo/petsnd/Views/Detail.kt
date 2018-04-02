@@ -51,7 +51,7 @@ class Detail : AppCompatActivity() {
 
         //fijar imagen de la vista detalle
         val url = pubclick.urlimage
-        Picasso.with(this).load(url).into(ibdetail)
+        Picasso.with(this).load(url).into(ivdetail)
 
         //inicializar la lista de comentarios de la publicacion pulsada
         listacom = ArrayList()
@@ -92,7 +92,7 @@ class Detail : AppCompatActivity() {
 
         //imagebutton dentro de la vista detail para mostrar la imagen en pantalla completa
         //paso la url de la imagen a la vista imagefull
-        ibdetail.setOnClickListener { view ->
+        ivdetail.setOnClickListener { view ->
             val intent = Intent(this,ImageFull::class.java)
             intent.putExtra("image",pubclick.urlimage)
             this.startActivity(intent)
@@ -115,10 +115,6 @@ class Detail : AppCompatActivity() {
                         setHighlightColor(Color.BLACK)
                         setTextSize(22f)
                     }
-
-                    //investigar como dar formato a fecha, NO DEJAR ASÍ DE FEO
-                    //formatear la fecha del sistema, es necesario una api 21 como mínimo para simpledateformat
-                    //var ff = SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Date())
 
                     negativeButton("Enviar") {
                         if (etComent.text.length == 0)

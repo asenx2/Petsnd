@@ -12,9 +12,6 @@ class Register : AuthFunctions() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        //instancia del auth
-//        mAuth = FirebaseAuth.getInstance()
-
         //si pulso en el boton me manda al login de nuevo y se intenta registrar el usuario
         btnRegister.setOnClickListener(View.OnClickListener {
             createAccount(etMailReg.text.toString(),etPassReg.text.toString())
