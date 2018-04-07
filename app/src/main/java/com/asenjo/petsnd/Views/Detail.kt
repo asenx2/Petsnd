@@ -1,18 +1,23 @@
 package com.asenjo.petsnd.Views
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.widget.Toast
 import com.asenjo.petsnd.Adapters.AdapterComentarios
 import com.asenjo.petsnd.Model.Comentario
 import com.asenjo.petsnd.Model.Publicacion
 import com.asenjo.petsnd.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_image_full.*
 import kotlinx.android.synthetic.main.content_detail.*
 import org.jetbrains.anko.*
 import java.util.*
@@ -28,19 +33,25 @@ class Detail : AppCompatActivity() {
     private lateinit var refCom: DatabaseReference
     private lateinit var pubclick: Publicacion
 
+    //variables para controlar las publicaciones favoritas en el sharedpreferences
+    private lateinit var shPublisFav: SharedPreferences
+    private var isFav: Boolean = false
+
     //coger el nombre de la autenticacion y recortar hasta el @
     private var mAuth: FirebaseAuth? = FirebaseAuth.getInstance()
-    val currentUser = mAuth!!.currentUser
-    val nameUser = currentUser!!.email!!.toString().substringBefore('@', currentUser.email.toString())
+    private val currentUser = mAuth!!.currentUser
+    private val nameUser = currentUser!!.email!!.toString().substringBefore('@', currentUser.email.toString())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
         //setSupportActionBar(toolbar)
-
         //comento la linea superior para no mostrar la apptoolbar
         //lo guardo por si lo utilizo en el futuro
+
+        //coger los elementos del sharedpreferences
+        shPublisFav = getSharedPreferences("favoritas",Context.MODE_PRIVATE)
 
         //recoger la publicacion que he pulsado en la activity anterior
         pubclick = intent.getSerializableExtra("publipulsada") as Publicacion
@@ -58,7 +69,7 @@ class Detail : AppCompatActivity() {
 
         //configurar el adaptador para el recycler view de comentarios
         rvcomen.layoutManager = LinearLayoutManager(this)
-        adapter = AdapterComentarios(this,R.layout.rowcom,listacom)
+        adapter = AdapterComentarios(this, R.layout.rowcom, listacom)
         rvcomen.adapter = adapter
 
         //obtener datos de firebase
@@ -93,8 +104,8 @@ class Detail : AppCompatActivity() {
         //imagebutton dentro de la vista detail para mostrar la imagen en pantalla completa
         //paso la url de la imagen a la vista imagefull
         ivdetail.setOnClickListener { view ->
-            val intent = Intent(this,ImageFull::class.java)
-            intent.putExtra("image",pubclick.urlimage)
+            val intent = Intent(this, ImageFull::class.java)
+            intent.putExtra("image", pubclick.urlimage)
             this.startActivity(intent)
         }
 
@@ -102,6 +113,42 @@ class Detail : AppCompatActivity() {
         btnComentar.setOnClickListener { view ->
             dialogComent()
         }
+
+        //imageview para guardar en favoritos
+        ivFav.setOnClickListener { view ->
+            editorFavoritas()
+        }
+
+        //establecer si la estrella está encendida o apagada
+        val favSH = shPublisFav.getString(pubclick.urlimage,"empty")
+        if (favSH == "empty"){
+            ivFav.setImageResource(R.drawable.nofav)
+            isFav = false
+        }
+        else{
+            ivFav.setImageResource(R.drawable.fav)
+            isFav = true
+        }
+
+    }
+
+    //gestionar las publicaciones del sharedpreferences
+    private fun editorFavoritas() {
+        val editor = shPublisFav.edit()
+        //val publijson : String = Gson().toJson(pubclick)
+        if (!isFav) {
+            //si está guardada y pulso en la imagen lo elimino
+            editor.remove(pubclick.urlimage)
+            ivFav.setImageResource(R.drawable.fav)
+            Toast.makeText(this,"Agregada a favoritos", Toast.LENGTH_LONG).show()
+        } else {
+            //guardo la url como key y el json con la publicacion completa
+            editor.putString(pubclick.urlimage, pubclick.fechaupload.toString())
+            ivFav.setImageResource(R.drawable.nofav)
+            Toast.makeText(this,"Eliminada de favoritos", Toast.LENGTH_LONG).show()
+        }
+        isFav = !isFav
+        editor.apply()
     }
 
     //dialogo para insertar un nuevo comentario
@@ -116,16 +163,15 @@ class Detail : AppCompatActivity() {
                         setTextSize(22f)
                     }
 
-                    negativeButton("Enviar") {
-                        if (etComent.text.length == 0)
-                            //etComent.text.isBlank()
-                            //añadir al if para que no se pueda insertar un comentario con espacios
+                    negativeButton("Cerrar") {}
+
+                    positiveButton("Enviar") {
+                        if (etComent.text.length == 0 || etComent.text.isBlank())
                             longToast("El comentario no puede estar vacío")
                         else
-                            //crear nuevo comentario con el usuario registrado y los demás valores recogidos
-                            refCom.push().setValue(Comentario(Date(),nameUser,pubclick.titulo,pubclick.fechaupload,etComent.text.toString()))
+                        //crear nuevo comentario con el usuario registrado y los demás valores recogidos
+                            refCom.push().setValue(Comentario(Date(), nameUser, pubclick.titulo, pubclick.fechaupload, etComent.text.toString()))
                     }
-                    positiveButton("Cerrar") {}
                 }
             }
         }.show()

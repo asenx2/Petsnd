@@ -46,7 +46,11 @@ dependencies {
 
     //rounded image
     compile 'de.hdodenhof:circleimageview:2.2.0'
+
+    //Gson para usar sharedpreferences con objetos
+    compile "com.google.code.gson:gson:2.8.0"
 }
+
 
 
 

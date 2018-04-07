@@ -39,8 +39,8 @@
             android:name=".Views.ImageFull"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Views.Perfiltabs" />
-        <activity android:name=".Views.Nickimage"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity android:name=".Views.Favorites"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
