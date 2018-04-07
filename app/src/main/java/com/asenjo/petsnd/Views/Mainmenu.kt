@@ -38,7 +38,7 @@ class Mainmenu : AppCompatActivity() {
         //con el boton favoritos muestro aquellas marcadas por el usuario
         //hasta que no esté hecho la parte del login no puedo implementar los favoritos
         btnFav.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this,Mainrv::class.java)
+            val intent = Intent(this,Favorites::class.java)
             this.startActivity(intent)
         })
 

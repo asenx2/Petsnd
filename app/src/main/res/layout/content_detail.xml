@@ -56,13 +56,13 @@
             android:text="Comentar" />
 
         <ImageView
-            android:id="@+id/ibFav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/ivFav"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignStart="@+id/tvtitulodetail"
             android:layout_below="@+id/btnComentar"
             android:layout_marginTop="11dp"
-            app:srcCompat="@android:drawable/btn_star_big_off" />
+            app:srcCompat="@drawable/nofav" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

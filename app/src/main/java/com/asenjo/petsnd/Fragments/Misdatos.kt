@@ -3,18 +3,14 @@ package com.asenjo.petsnd.Fragments
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import com.asenjo.petsnd.Model.Usuario
 import com.asenjo.petsnd.R
 import com.asenjo.petsnd.Views.Login
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 
 
 class Misdatos : Fragment() {
@@ -24,8 +20,8 @@ class Misdatos : Fragment() {
     }
 
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private lateinit var usuarioRegistrado: Usuario
     private val currentUser = mAuth!!.currentUser
+//    private val nameUser = currentUser!!.email!!.toString().substringBefore('@', currentUser.email.toString())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +39,6 @@ class Misdatos : Fragment() {
         btnout.setOnClickListener(View.OnClickListener {
             signout()
         })
-
-        val mail = rootView.findViewById(R.id.tvmail) as TextView
-        mail.text = currentUser!!.email
 
         return rootView
     }

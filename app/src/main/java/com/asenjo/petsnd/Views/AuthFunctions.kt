@@ -4,14 +4,11 @@ import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
-import com.asenjo.petsnd.Fragments.Misdatos
-import com.asenjo.petsnd.Model.Usuario
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
-import java.util.*
 
 /**
  * Created by Asenjo on 28/03/2018.
@@ -26,7 +23,6 @@ open class AuthFunctions : DialogClass() {
     var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private lateinit var refUsers: DatabaseReference
-    private lateinit var listaUsuarios: ArrayList<Usuario>
 
     //funcion para crear nueva cuenta. FUNCIONA CORRECTAMENTE
     fun createAccount(email: String, password: String) {
@@ -36,9 +32,6 @@ open class AuthFunctions : DialogClass() {
         }
         //cuando empieza el proceso de creación, aparece el dialogo de progreso
         showProgressDialog()
-
-        //inicializar
-        listaUsuarios = ArrayList()
 
         //método para crear un usuario con email y contraseña
         mAuth!!.createUserWithEmailAndPassword(email, password)
@@ -52,14 +45,6 @@ open class AuthFunctions : DialogClass() {
                         //mostrar toast si se ha registrado y volver al login para introducir los datos
                         Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this,Login::class.java))
-                        val user = mAuth!!.currentUser
-
-                        //***************************************************************************
-                        //registrar al usuario en la base de datos para utilizar después avatar y nick
-                        val database = FirebaseDatabase.getInstance()
-                        refUsers = database.getReference("usuarios")
-                        refUsers.push().setValue(Usuario(email,"","",Date()))
-                        //***************************************************************************
 
                     } else {
                         // If sign in fails, display a message to the user.
