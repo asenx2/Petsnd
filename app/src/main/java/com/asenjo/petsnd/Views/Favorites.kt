@@ -33,7 +33,7 @@ class Favorites : AppCompatActivity() {
 
         //mostrar tostada si la lista de favoritas está vacía
         if(listaFav.size == 0){
-            Toast.makeText(this,"Aún no tienes ninguna publicación favorita", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"No tienes ninguna publicación favorita", Toast.LENGTH_LONG).show()
         }
 
     }

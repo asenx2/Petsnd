@@ -22,13 +22,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
+                android:scaleType="fitXY"
                 card_view:srcCompat="@mipmap/ic_launcher_round" />
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="14dp"
             android:layout_marginTop="5dp">
 
             <TextView
@@ -36,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Subido por:" />
+                android:text="Subido por: " />
 
             <TextView
                 android:id="@+id/tvrowupl"

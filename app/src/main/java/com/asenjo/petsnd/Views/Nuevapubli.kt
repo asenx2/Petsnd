@@ -53,12 +53,6 @@ class Nuevapubli : AppCompatActivity() {
             uploadFile()
         }
 
-        //boton para ir a la lista de publicaciones
-        btnBack.setOnClickListener { view ->
-            val intent = Intent(this, Mainrv::class.java)
-            startActivity(intent)
-        }
-
     }
 
     //metodo que muestra la galeria para escoger una imagen
@@ -107,7 +101,7 @@ class Nuevapubli : AppCompatActivity() {
                         progressDialog.dismiss()
 
                         //mostrar tostada de éxito
-                        Toast.makeText(applicationContext, "Imagen subida", Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, "Imagen subida", Toast.LENGTH_SHORT).show()
 
                         //crear el objeto publicacion con los datos de los edit text y la url de la imagen subida
                         val upload = Publicacion(nameUser,etTituloUp.text.toString().trim { it <= ' ' },etDescUp.text.toString() ,Date(),taskSnapshot.downloadUrl!!.toString())
@@ -123,7 +117,7 @@ class Nuevapubli : AppCompatActivity() {
                     .addOnFailureListener { exception ->
                         //si se produce un fallo se muestra la tostada con el error y se detiene el dialogo de progreso
                         progressDialog.dismiss()
-                        Toast.makeText(applicationContext, exception.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(applicationContext, exception.message, Toast.LENGTH_SHORT).show()
                     }
                     .addOnProgressListener { taskSnapshot ->
                         //mostrar el dialogo de progreso
@@ -132,7 +126,7 @@ class Nuevapubli : AppCompatActivity() {
                     }
         } else {
             //si no se ha seleccionado ninguna imagen, no se muestra
-            Toast.makeText(applicationContext, "No se ha seleccionado ninguna imagen", Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "No has seleccionado ninguna imagen", Toast.LENGTH_SHORT).show()
         }
     }
 }

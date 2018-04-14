@@ -7,12 +7,9 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.View
 import com.asenjo.petsnd.Fragments.Misdatos
 import com.asenjo.petsnd.Fragments.Mispublis
-import com.asenjo.petsnd.Fragments.Misseguidores
 import com.asenjo.petsnd.R
-import kotlinx.android.synthetic.main.activity_mainrv.*
 import kotlinx.android.synthetic.main.activity_perfiltabs.*
 import java.util.*
 
@@ -36,7 +33,6 @@ class Perfiltabs : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(Misdatos(), "Datos")
         adapter.addFragment(Mispublis(), "Publicaciones")
-        adapter.addFragment(Misseguidores(),"Seguidores")
         viewPager.adapter = adapter
     }
 

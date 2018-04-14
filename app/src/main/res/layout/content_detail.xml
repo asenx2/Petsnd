@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="3dp"
             android:layout_marginTop="3dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher_round" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="7dp"
             android:layout_alignTop="@+id/ivdetail"
             android:layout_toEndOf="@+id/ivdetail"
             android:text="TextView" />
@@ -39,11 +39,10 @@
         <TextView
             android:id="@+id/tvtitulodetail"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="3dp"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/btnComentar"
             android:layout_below="@+id/tvuploaderdetail"
             android:layout_marginTop="13dp"
-            android:layout_toEndOf="@+id/ivdetail"
             android:text="TextView" />
 
         <Button
@@ -52,6 +51,7 @@
             android:layout_height="42dp"
             android:layout_below="@+id/tvtitulodetail"
             android:layout_marginTop="12dp"
+            android:layout_marginLeft="7dp"
             android:layout_toEndOf="@+id/ivdetail"
             android:text="Comentar" />
 
@@ -62,7 +62,16 @@
             android:layout_alignStart="@+id/tvtitulodetail"
             android:layout_below="@+id/btnComentar"
             android:layout_marginTop="11dp"
+            android:layout_marginLeft="7dp"
             app:srcCompat="@drawable/nofav" />
+
+        <ImageView
+            android:id="@+id/ivBorrar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@+id/ivFav"
+            android:layout_toEndOf="@+id/tvtitulodetail"
+            app:srcCompat="@drawable/trash" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
