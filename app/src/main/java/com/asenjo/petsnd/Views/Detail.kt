@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.content_detail.*
 import org.jetbrains.anko.*
 import java.util.*
 
+
 class Detail : AppCompatActivity() {
 
     companion object {
@@ -53,7 +54,7 @@ class Detail : AppCompatActivity() {
         //coger los elementos del sharedpreferences
         shPublisFav = getSharedPreferences("favoritas",Context.MODE_PRIVATE)
 
-        //recoger la publicacion que he pulsado en la activity anterior
+        //recoger la publicacion que he pulsado en la activity anterior(desde mainrv o favorites)
         pubclick = intent.getSerializableExtra("publipulsada") as Publicacion
 
         //fijar los textview con la informacion de la publicacion que he recogido
@@ -162,8 +163,10 @@ class Detail : AppCompatActivity() {
 
     private fun eliminarPubli() {
 
+        //despues de elimar la publicacion, volver a la lista completa
+        val intent = Intent(this,Mainrv::class.java)
+        this.startActivity(intent)
     }
-
 
     //gestionar las publicaciones del sharedpreferences
     private fun editorFavoritas() {
