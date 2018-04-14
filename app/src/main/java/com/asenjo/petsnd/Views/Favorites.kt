@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 import com.asenjo.petsnd.Adapters.AdapterFavoritas
 import com.asenjo.petsnd.Model.Publicacion
 import com.asenjo.petsnd.R
@@ -15,7 +16,6 @@ class Favorites : AppCompatActivity() {
 
     private lateinit var adapter: AdapterFavoritas
     private lateinit var listaFav: ArrayList<Publicacion>
-    private var isFav = false
     private lateinit var shPublisFav: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +30,11 @@ class Favorites : AppCompatActivity() {
 
         cargarFavoritasShared()
         cargarAdaptador()
+
+        //mostrar tostada si la lista de favoritas está vacía
+        if(listaFav.size == 0){
+            Toast.makeText(this,"Aún no tienes ninguna publicación favorita", Toast.LENGTH_LONG).show()
+        }
 
     }
 
@@ -48,12 +53,24 @@ class Favorites : AppCompatActivity() {
     }
 
 
-    private fun cargarAdaptador() {
+    fun cargarAdaptador() {
         //configurar el adaptador del recycler view
         rvfavorites.layoutManager = LinearLayoutManager(this)
         adapter = AdapterFavoritas(this,R.layout.rowfavorite,listaFav)
         rvfavorites.adapter = adapter
+        refrescar()
+    }
+
+    private fun refrescar(){
         adapter.notifyDataSetChanged()
+    }
+
+    //metodo para que al volver desde la vista detalle y eliminar de favorito
+    //se refresque la pagina y no se muestre en la lista de favoritos la eliminada
+    public override fun onRestart() {
+        super.onRestart()
+        finish()
+        this.startActivity(intent)
     }
 
 }

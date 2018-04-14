@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_image_full.*
 import kotlinx.android.synthetic.main.content_detail.*
 import org.jetbrains.anko.*
 import java.util.*
@@ -140,19 +139,17 @@ class Detail : AppCompatActivity() {
 
         if (isFav) {
 
-            //si está guardada y pulso en la imagen lo elimino
+            //si está guardada y pulso en la imagen elimino la publi con la key de urlimage
             editor.remove("${pubclick.urlimage}")
 
-            editor.apply()
             ivFav.setImageResource(R.drawable.nofav)
             Toast.makeText(this,"Eliminada de favoritos", Toast.LENGTH_LONG).show()
         } else {
-
+            //guardo el json con toda la info de la publicacion con la urlimage como key
             editor.putString("${pubclick.urlimage}", jsonPubli)
 
-            editor.apply()
             ivFav.setImageResource(R.drawable.fav)
-            Toast.makeText(this,"Agregada a favoritos", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"Agregada a favoritos", Toast.LENGTH_SHORT).show()
         }
         isFav = !isFav
         editor.apply()
