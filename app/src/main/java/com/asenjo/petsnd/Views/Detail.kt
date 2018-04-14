@@ -120,14 +120,15 @@ class Detail : AppCompatActivity() {
         }
 
         //establecer si la estrella está encendida o apagada
+        //devuelve la url si existe y empty si no existe
         val favSH = shPublisFav.getString(pubclick.urlimage,"empty")
-        if (favSH == "empty"){
+        isFav = if (favSH == "empty"){
             ivFav.setImageResource(R.drawable.nofav)
-            isFav = false
+            false
         }
         else{
             ivFav.setImageResource(R.drawable.fav)
-            isFav = true
+            true
         }
 
     }
@@ -135,17 +136,23 @@ class Detail : AppCompatActivity() {
     //gestionar las publicaciones del sharedpreferences
     private fun editorFavoritas() {
         val editor = shPublisFav.edit()
-        //val publijson : String = Gson().toJson(pubclick)
-        if (!isFav) {
+        val jsonPubli : String = Gson().toJson(pubclick)
+
+        if (isFav) {
+
             //si está guardada y pulso en la imagen lo elimino
-            editor.remove(pubclick.urlimage)
-            ivFav.setImageResource(R.drawable.fav)
-            Toast.makeText(this,"Agregada a favoritos", Toast.LENGTH_LONG).show()
-        } else {
-            //guardo la url como key y el json con la publicacion completa
-            editor.putString(pubclick.urlimage, pubclick.fechaupload.toString())
+            editor.remove("${pubclick.urlimage}")
+
+            editor.apply()
             ivFav.setImageResource(R.drawable.nofav)
             Toast.makeText(this,"Eliminada de favoritos", Toast.LENGTH_LONG).show()
+        } else {
+
+            editor.putString("${pubclick.urlimage}", jsonPubli)
+
+            editor.apply()
+            ivFav.setImageResource(R.drawable.fav)
+            Toast.makeText(this,"Agregada a favoritos", Toast.LENGTH_LONG).show()
         }
         isFav = !isFav
         editor.apply()
