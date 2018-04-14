@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.asenjo.petsnd.Adapters.AdapterComentarios
 import com.asenjo.petsnd.Model.Comentario
@@ -130,7 +131,39 @@ class Detail : AppCompatActivity() {
             true
         }
 
+        //solo mostrar la opcion de borrar al autor de la publicacion
+        if(!pubclick.uploader.equals(nameUser)){
+            ivBorrar.visibility = View.GONE
+        }
+
+        ivBorrar.setOnClickListener { view ->
+            dialogConfirm()
+        }
+
     }
+
+    private fun dialogConfirm() {
+        alert {
+            title = "¿Estás seguro de eliminar la publicación?"
+            customView {
+                verticalLayout {
+                    lparams(
+                            width = wrapContent,
+                            height = wrapContent
+                    )
+                    negativeButton("No") {}
+                    positiveButton("Si") {
+                        eliminarPubli()
+                    }
+                }
+            }
+        }.show()
+    }
+
+    private fun eliminarPubli() {
+
+    }
+
 
     //gestionar las publicaciones del sharedpreferences
     private fun editorFavoritas() {
