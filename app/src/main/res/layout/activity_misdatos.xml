@@ -28,15 +28,56 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="338dp"
+            android:paddingTop="15dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp">
 
-            <Button
+            <TextView
+                android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="Correo electrónico: " />
+
+            <TextView
+                android:id="@+id/tvmimail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/btnout"
+                android:layout_below="@+id/tvmimail"
+                android:layout_marginTop="16dp"
+                android:text="Fecha de registro: " />
+
+            <TextView
+                android:id="@+id/tvmialta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tvmimail"
+                android:layout_below="@+id/tv2"
+                android:layout_marginTop="14dp"
+                android:text="TextView" />
+
+
+            <Button
                 android:id="@+id/btnout"
-                android:text="CERRAR SESIÓN"/>
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_alignEnd="@+id/tv1"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="47dp"
+                android:background="@android:color/holo_red_light"
+                android:text="CERRAR SESIÓN" />
 
         </RelativeLayout>
     </LinearLayout>

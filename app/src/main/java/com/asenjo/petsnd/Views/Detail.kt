@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.content_detail.*
 import org.jetbrains.anko.*
 import java.util.*
 
-
 class Detail : AppCompatActivity() {
 
     companion object {
