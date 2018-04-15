@@ -8,7 +8,6 @@ import java.util.*
  */
 //Clase usuario con los datos para el registro y login. Hay que añadir más parámetros según lo vaya necesitando
 data class Usuario(var email:String="",
-                   var nick:String="",
                    var avatar:String="",
                    var fechaalta: Date = Date())
 
