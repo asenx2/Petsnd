@@ -32,6 +32,7 @@ class Detail : AppCompatActivity() {
     private lateinit var listacom: ArrayList<Comentario>
     private lateinit var adapter: AdapterComentarios
     private lateinit var refCom: DatabaseReference
+    private lateinit var refPub: DatabaseReference
     private lateinit var pubclick: Publicacion
 
     //variables para controlar las publicaciones favoritas en el sharedpreferences
@@ -73,34 +74,7 @@ class Detail : AppCompatActivity() {
         adapter = AdapterComentarios(this, R.layout.rowcom, listacom)
         rvcomen.adapter = adapter
 
-        //obtener datos de firebase
-        val database = FirebaseDatabase.getInstance()
-        refCom = database.getReference("comentarios")
-        refCom.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Log.e(TAG, dataSnapshot.childrenCount.toString())
-                listacom.clear()
-                for (dataSnapshothijo in dataSnapshot.children) {
-                    val coment = dataSnapshothijo.getValue(Comentario::class.java)
-                    //cojo el titulo de la publicacion y la del comentario (que se le pasa para que sea el mismo) para
-                    //que solo se muestren los comentarios de una publicacion concreta
-                    //hago lo mismo con la fecha por si dos publicaciones tuvieran el mismo nombre
-                    if (pubclick.titulo.equals(coment!!.titulopadre) && pubclick.fechaupload.equals(coment!!.fechapadre)) {
-                        //si se cumple la condicion, añadir el comentario al arraylist
-                        listacom.add(coment!!)
-                    }
-                }
-                //invertir la lista para que se muestren los ultimos en la parte superior
-                listacom.reverse()
-                //notificar los cambios al recycler view para mostrar el nuevo comentario mostrado
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                //mostrar error en el logcat si no se ha podido leer
-                Log.e(TAG, "Error de lectura.", error.toException())
-            }
-        })
+        cargarDatosFirebase()
 
         //imagebutton dentro de la vista detail para mostrar la imagen en pantalla completa
         //paso la url de la imagen a la vista imagefull
@@ -143,6 +117,37 @@ class Detail : AppCompatActivity() {
 
     }
 
+    private fun cargarDatosFirebase() {
+        //obtener datos de firebase
+        val database = FirebaseDatabase.getInstance()
+        refCom = database.getReference("comentarios")
+        refCom.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                Log.e(TAG, dataSnapshot.childrenCount.toString())
+                listacom.clear()
+                for (dataSnapshothijo in dataSnapshot.children) {
+                    val coment = dataSnapshothijo.getValue(Comentario::class.java)
+                    //cojo el titulo de la publicacion y la del comentario (que se le pasa para que sea el mismo) para
+                    //que solo se muestren los comentarios de una publicacion concreta
+                    //hago lo mismo con la fecha por si dos publicaciones tuvieran el mismo nombre
+                    if (pubclick.titulo.equals(coment!!.titulopadre) && pubclick.fechaupload.equals(coment!!.fechapadre)) {
+                        //si se cumple la condicion, añadir el comentario al arraylist
+                        listacom.add(coment!!)
+                    }
+                }
+                //invertir la lista para que se muestren los ultimos en la parte superior
+                listacom.reverse()
+                //notificar los cambios al recycler view para mostrar el nuevo comentario mostrado
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //mostrar error en el logcat si no se ha podido leer
+                Log.e(TAG, "Error de lectura.", error.toException())
+            }
+        })
+    }
+
     private fun dialogConfirm() {
         alert {
             title = "¿Estás seguro de eliminar la publicación?"
@@ -155,6 +160,7 @@ class Detail : AppCompatActivity() {
                     negativeButton("No") {}
                     positiveButton("Si") {
                         eliminarPubli()
+                        finish()
                     }
                 }
             }
@@ -163,9 +169,31 @@ class Detail : AppCompatActivity() {
 
     private fun eliminarPubli() {
 
-        //despues de elimar la publicacion, volver a la lista completa
-        val intent = Intent(this,Mainrv::class.java)
-        this.startActivity(intent)
+        //eliminar tambien de favoritos para no mostrarlo
+        val editor = shPublisFav.edit()
+        editor.remove("${pubclick.urlimage}")
+        isFav = !isFav
+        editor.apply()
+
+        //cojo la referencia de publicaciones
+        refPub = FirebaseDatabase.getInstance().getReference().child("publicaciones")
+        //busco en el campo urlimage el valor que coincida con la de la publicacion en la que estoy
+        refPub.orderByChild("urlimage").equalTo(pubclick.urlimage).addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for(datas in dataSnapshot.children){
+                    //cojo la clave del padre donde se dan esas condiciones
+                    var key = datas.key
+                    //y pungo el valor de la key a null, que es igual que borrar los datos que contiene
+                    refPub.child(key).setValue(null)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //mostrar error en el logcat si no se ha podido leer
+                Log.e(TAG, "Error de lectura.", error.toException())
+            }
+        })
+
     }
 
     //gestionar las publicaciones del sharedpreferences

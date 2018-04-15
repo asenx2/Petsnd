@@ -67,7 +67,7 @@ class Mainrv : AppCompatActivity(), SearchView.OnQueryTextListener {
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
                 Log.e(TAG, "Error de lectura.", error.toException())
-            }
+        }
         })
 
         //pulsar boton flotante para ir a la activity de nueva publicacion
