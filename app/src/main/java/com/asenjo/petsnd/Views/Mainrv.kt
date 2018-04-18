@@ -67,7 +67,7 @@ class Mainrv : AppCompatActivity(), SearchView.OnQueryTextListener {
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
                 Log.e(TAG, "Error de lectura.", error.toException())
-        }
+            }
         })
 
         //pulsar boton flotante para ir a la activity de nueva publicacion
@@ -93,7 +93,7 @@ class Mainrv : AppCompatActivity(), SearchView.OnQueryTextListener {
         // ************* SearchView ************
         val searchItem = menu.findItem(R.id.search)
         searchView = searchItem.actionView as SearchView
-        searchView.setQueryHint("Search...")
+        searchView.setQueryHint("Buscar...")
         searchView.setOnQueryTextListener(this)
         // ************* / SearchView ************
         return true

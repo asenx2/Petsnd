@@ -14,7 +14,6 @@ import com.asenjo.petsnd.R
 import com.asenjo.petsnd.Views.Detail
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.util.*
 
 class Mispublis : Fragment() {
 
@@ -42,12 +41,10 @@ class Mispublis : Fragment() {
         // Inflate the layout for this fragment
         val rootView = inflater!!.inflate(R.layout.activity_mispublis, container, false)
 
-        rellenarDatos()
-        //cargarDatosFirebase()
+        lista = ArrayList()
+        cargarDatosFirebase()
 
         myRv = rootView.findViewById(R.id.rvmispublis) as RecyclerView
-
-        cargarAdaptador()
 
         return rootView
     }
@@ -69,7 +66,9 @@ class Mispublis : Fragment() {
                     }
                 }
 
+                //hay que llamar al adaptador aqui porque firebase es asincrono
                 cargarAdaptador()
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -85,28 +84,5 @@ class Mispublis : Fragment() {
         myRv.adapter = adapter
         adapter.notifyDataSetChanged()
     }
-
-
-    private fun rellenarDatos() {
-        lista = ArrayList()
-        var publi1 = Publicacion("kk", "kk", "kk", Date(), "http://www.natureaustralia.org.au/wp-content/uploads/2016/05/Quokka-The-Nature-Conservancy-Australia.jpg")
-        var publi2 = Publicacion("kk", "kk", "kk", Date(), "http://www.natureaustralia.org.au/wp-content/uploads/2016/05/Quokka-The-Nature-Conservancy-Australia.jpg")
-        var publi3 = Publicacion("kk", "kk", "kk", Date(), "http://www.natureaustralia.org.au/wp-content/uploads/2016/05/Quokka-The-Nature-Conservancy-Australia.jpg")
-        var publi4 = Publicacion("kk", "kk", "kk", Date(), "http://www.natureaustralia.org.au/wp-content/uploads/2016/05/Quokka-The-Nature-Conservancy-Australia.jpg")
-        var publi5 = Publicacion("kk", "kk", "kk", Date(), "http://www.natureaustralia.org.au/wp-content/uploads/2016/05/Quokka-The-Nature-Conservancy-Australia.jpg")
-        var publi6 = Publicacion("kk", "kk", "kk", Date(), "http://www.natureaustralia.org.au/wp-content/uploads/2016/05/Quokka-The-Nature-Conservancy-Australia.jpg")
-        var publi7 = Publicacion("kk", "kk", "kk", Date(), "http://www.natureaustralia.org.au/wp-content/uploads/2016/05/Quokka-The-Nature-Conservancy-Australia.jpg")
-        var publi8 = Publicacion("kk", "kk", "kk", Date(), "http://www.natureaustralia.org.au/wp-content/uploads/2016/05/Quokka-The-Nature-Conservancy-Australia.jpg")
-
-        lista.add(publi1)
-        lista.add(publi2)
-        lista.add(publi3)
-        lista.add(publi4)
-        lista.add(publi5)
-        lista.add(publi6)
-        lista.add(publi7)
-        lista.add(publi8)
-    }
-
 
 }

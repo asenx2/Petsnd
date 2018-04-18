@@ -50,6 +50,7 @@ class Mainmenu : AppCompatActivity() {
     }
 
     //funcion para salir de la aplicacion cuando esté en el menú (lo que indica que ya me he registrado y no quiero ir al login)
+    //tambien se establece como la activity de inicio al volver a abrir la app
     override fun onBackPressed() {
         if (backButtonCount >= 1) {
             val intent = Intent(Intent.ACTION_MAIN)
