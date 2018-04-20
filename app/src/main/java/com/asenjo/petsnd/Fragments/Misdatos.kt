@@ -44,9 +44,7 @@ class Misdatos : Fragment() {
 
         btnout.setOnClickListener(View.OnClickListener {
             //signout()
-
-            //para obtener el contexto funciona activity y context en lugar de this
-            Toast.makeText(activity,"Ande bas?!",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity,"Quietoo",Toast.LENGTH_SHORT).show()
         })
 
         return rootView
@@ -57,6 +55,7 @@ class Misdatos : Fragment() {
     //funcion para cerrar sesion y volver a la pantalla inicial
     private fun signout() {
         mAuth!!.signOut()
+        //para obtener el contexto funciona activity y context en lugar de this
         val intent = Intent(context,Login::class.java)
         startActivity(intent)
     }

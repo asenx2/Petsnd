@@ -32,7 +32,7 @@ class Perfiltabs : AppCompatActivity() {
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(Misdatos(), "Datos")
-        adapter.addFragment(Mispublis(), "Publicaciones")
+        adapter.addFragment(Mispublis(), "Mis publicaciones")
         viewPager.adapter = adapter
     }
 
