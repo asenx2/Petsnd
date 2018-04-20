@@ -2,6 +2,7 @@ package com.asenjo.petsnd.Views
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_nuevapubli.*
+import java.io.File
 import java.io.IOException
 import java.util.*
 
@@ -49,7 +51,7 @@ class Nuevapubli : AppCompatActivity() {
         }
 
         //boton para subir la imagen
-        btnPublish.setOnClickListener{ view ->
+        btnPublish.setOnClickListener { view ->
             uploadFile()
         }
 
@@ -83,6 +85,10 @@ class Nuevapubli : AppCompatActivity() {
         return mime.getExtensionFromMimeType(cR.getType(uri))
     }
 
+    //utilizar metodo David. Comprimir la imagen y retornar un Bitmap. Despues investigar para obtener la uri de ese bitmap
+    //que sera la que pasaré al sRef.putFile
+    //despues de realizar la subida hay que eliminar la imagen comprimida
+
     private fun uploadFile() {
         //si la imagen está disponible...
         if (filePath != null) {
@@ -104,7 +110,7 @@ class Nuevapubli : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Imagen subida", Toast.LENGTH_SHORT).show()
 
                         //crear el objeto publicacion con los datos de los edit text y la url de la imagen subida
-                        val upload = Publicacion(nameUser,etTituloUp.text.toString().trim { it <= ' ' },etDescUp.text.toString() ,Date(),taskSnapshot.downloadUrl!!.toString())
+                        val upload = Publicacion(nameUser, etTituloUp.text.toString().trim { it <= ' ' }, etDescUp.text.toString(), Date(), taskSnapshot.downloadUrl!!.toString())
 
                         //añadir la publicación a la base de datos
                         val uploadId = mDatabase!!.push().key
@@ -129,4 +135,5 @@ class Nuevapubli : AppCompatActivity() {
             Toast.makeText(applicationContext, "No has seleccionado ninguna imagen", Toast.LENGTH_SHORT).show()
         }
     }
+
 }

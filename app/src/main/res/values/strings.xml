@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Petsnd</string>
+    <string name="app_name">InstaPet</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_mainrv">Buscar usuario</string>
     <string name="title_activity_detail">Detail</string>

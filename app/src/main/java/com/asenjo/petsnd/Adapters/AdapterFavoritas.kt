@@ -46,11 +46,11 @@ class AdapterFavoritas(val context: Context,
         fun bind(dataItem: Publicacion, position: Int) {
 
             val url = dataItem.urlimage
-            Picasso.with(context).load(url).into(itemView.ivrowfav)
+            Picasso.with(context).load(url).into(itemView.ivfavround)
 
-            itemView.tvtitulofav.text = dataItem.titulo
+            //itemView.tvtitulofav.text = dataItem.titulo
 
-            itemView.setOnClickListener(View.OnClickListener {
+            itemView.ivfavround.setOnClickListener(View.OnClickListener {
                 onItemClick(dataItem)
             })
 
