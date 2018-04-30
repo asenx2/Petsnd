@@ -51,7 +51,7 @@ class Mainrv : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         //obtener datos de firebase (realtime database)
         val database = FirebaseDatabase.getInstance()
-        refPub = database.getReference("publicaciones")
+        refPub = database.getReference("publicacionesNuevo")
         refPub.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 Log.e(TAG, dataSnapshot.childrenCount.toString())

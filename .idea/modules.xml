@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Petsnd.iml" filepath="$PROJECT_DIR$/Petsnd.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/compressorMod/compressorMod.iml" filepath="$PROJECT_DIR$/compressorMod/compressorMod.iml" />
     </modules>
   </component>
 </project>

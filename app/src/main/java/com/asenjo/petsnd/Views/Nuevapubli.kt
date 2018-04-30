@@ -2,7 +2,6 @@ package com.asenjo.petsnd.Views
 
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,17 +16,17 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_nuevapubli.*
-import java.io.File
 import java.io.IOException
 import java.util.*
+
 
 class Nuevapubli : AppCompatActivity() {
 
     //constant to track image chooser intent
     private val PICK_IMAGE_REQUEST = 234
 
-    //uri para almacenar las fotos que subo
-    private lateinit var filePath: Uri
+    //uri de la imagen de la galeria
+    private lateinit var filePathGallery: Uri
 
     private lateinit var storageReference: StorageReference
     private lateinit var mDatabase: DatabaseReference
@@ -43,7 +42,11 @@ class Nuevapubli : AppCompatActivity() {
 
         storageReference = FirebaseStorage.getInstance().reference
         //decir a database en qué lista guardar la informacion que le paso
-        mDatabase = FirebaseDatabase.getInstance().getReference("publicaciones")
+        mDatabase = FirebaseDatabase.getInstance().getReference("publicacionesNuevo")
+
+        if(etTituloUp.text.equals("")){
+            btnPublish.isEnabled = false
+        }
 
         //boton para seleccionar el archivo que quiero subir
         btnSelect.setOnClickListener { view ->
@@ -69,10 +72,12 @@ class Nuevapubli : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
-            filePath = data.data
+            filePathGallery = data.data
+
             try {
-                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
+                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePathGallery)
                 ivpreview.setImageBitmap(bitmap)
+
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -85,55 +90,58 @@ class Nuevapubli : AppCompatActivity() {
         return mime.getExtensionFromMimeType(cR.getType(uri))
     }
 
-    //utilizar metodo David. Comprimir la imagen y retornar un Bitmap. Despues investigar para obtener la uri de ese bitmap
-    //que sera la que pasaré al sRef.putFile
-    //despues de realizar la subida hay que eliminar la imagen comprimida
-
     private fun uploadFile() {
-        //si la imagen está disponible...
-        if (filePath != null) {
-            //mostrar dialogo de progreso mientras se sube
-            val progressDialog = ProgressDialog(this)
-            progressDialog.setTitle("Subiendo...")
-            progressDialog.show()
+        //si el título está vacío mostrar un toast de información
+        if(!etTituloUp.text.isNullOrEmpty()) {
 
-            //coger la referencia de storage para guardar la foto
-            val sRef = storageReference!!.child("images/" + System.currentTimeMillis() + "." + getFileExtension(filePath))
+            if (filePathGallery == null) {
+                //si no se ha seleccionado ninguna imagen, no se muestra
+                Toast.makeText(applicationContext, "No has seleccionado ninguna imagen", Toast.LENGTH_SHORT).show()
 
-            //añadir la imagen al storage
-            sRef.putFile(filePath)
-                    .addOnSuccessListener { taskSnapshot ->
-                        //cuando se sube la imagen se detiene el dialogo de progreso
-                        progressDialog.dismiss()
+            } else {
+                //si la imagen está disponible...
+                //mostrar dialogo de progreso mientras se sube
+                val progressDialog = ProgressDialog(this)
+                progressDialog.setTitle("Subiendo...")
+                progressDialog.show()
 
-                        //mostrar tostada de éxito
-                        Toast.makeText(applicationContext, "Imagen subida", Toast.LENGTH_SHORT).show()
+                //coger la referencia de storage para guardar la foto
+                val sRef = storageReference!!.child("imagesCompressed/" + System.currentTimeMillis() + getFileExtension(filePathGallery))
 
-                        //crear el objeto publicacion con los datos de los edit text y la url de la imagen subida
-                        val upload = Publicacion(nameUser, etTituloUp.text.toString().trim { it <= ' ' }, etDescUp.text.toString(), Date(), taskSnapshot.downloadUrl!!.toString())
+                //añadir la imagen al storage
+                sRef.putFile(filePathGallery)
+                        .addOnSuccessListener { taskSnapshot ->
+                            //cuando se sube la imagen se detiene el dialogo de progreso
+                            progressDialog.dismiss()
 
-                        //añadir la publicación a la base de datos
-                        val uploadId = mDatabase!!.push().key
-                        mDatabase!!.child(uploadId).setValue(upload)
+                            //mostrar tostada de éxito
+                            Toast.makeText(applicationContext, "Imagen subida", Toast.LENGTH_SHORT).show()
 
-                        //al realizar la subida, volver a la vista mainrv
-                        val intent = Intent(this, Mainrv::class.java)
-                        startActivity(intent)
-                    }
-                    .addOnFailureListener { exception ->
-                        //si se produce un fallo se muestra la tostada con el error y se detiene el dialogo de progreso
-                        progressDialog.dismiss()
-                        Toast.makeText(applicationContext, exception.message, Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnProgressListener { taskSnapshot ->
-                        //mostrar el dialogo de progreso
-                        val progress = 100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
-                        progressDialog.setMessage("Subido " + progress.toInt() + "%...")
-                    }
+                            //crear el objeto publicacion con los datos de los edit text y la url de la imagen subida
+                            val upload = Publicacion(nameUser, etTituloUp.text.toString().trim { it <= ' ' }, etDescUp.text.toString(), Date(), taskSnapshot.downloadUrl!!.toString())
+
+                            //añadir la publicación a la base de datos
+                            val uploadId = mDatabase!!.push().key
+                            mDatabase!!.child(uploadId).setValue(upload)
+
+                            //al realizar la subida, volver a la vista mainrv
+                            val intent = Intent(this, Mainrv::class.java)
+                            startActivity(intent)
+                        }
+                        .addOnFailureListener { exception ->
+                            //si se produce un fallo se muestra la tostada con el error y se detiene el dialogo de progreso
+                            progressDialog.dismiss()
+                            Toast.makeText(applicationContext, exception.message, Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnProgressListener { taskSnapshot ->
+                            //mostrar el dialogo de progreso
+                            val progress = 100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount
+                            progressDialog.setMessage("Subido " + progress.toInt() + "%...")
+                        }
+            }
         } else {
-            //si no se ha seleccionado ninguna imagen, no se muestra
-            Toast.makeText(applicationContext, "No has seleccionado ninguna imagen", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "El título no puede estar vacío", Toast.LENGTH_SHORT).show()
         }
     }
-
 }
+

@@ -52,7 +52,7 @@ class Mispublis : Fragment() {
     private fun cargarDatosFirebase() {
         //obtener datos de firebase
         val database = FirebaseDatabase.getInstance()
-        refMisPub = database.getReference("publicaciones")
+        refMisPub = database.getReference("publicacionesNuevo")
         refMisPub.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 Log.e(Detail.TAG, dataSnapshot.childrenCount.toString())

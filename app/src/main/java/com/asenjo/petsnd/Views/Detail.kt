@@ -119,7 +119,7 @@ class Detail : AppCompatActivity() {
     private fun cargarDatosFirebase() {
         //obtener datos de firebase
         val database = FirebaseDatabase.getInstance()
-        refCom = database.getReference("comentarios")
+        refCom = database.getReference("comentariosNuevo")
         refCom.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 Log.e(TAG, dataSnapshot.childrenCount.toString())
@@ -175,7 +175,7 @@ class Detail : AppCompatActivity() {
         editor.apply()
 
         //cojo la referencia de publicaciones
-        refPub = FirebaseDatabase.getInstance().getReference().child("publicaciones")
+        refPub = FirebaseDatabase.getInstance().getReference().child("publicacionesNuevo")
         //busco en el campo urlimage el valor que coincida con la de la publicacion en la que estoy
         refPub.orderByChild("urlimage").equalTo(pubclick.urlimage).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -226,8 +226,8 @@ class Detail : AppCompatActivity() {
                     lparams(width = matchParent, height = wrapContent)
                     val etComent = editText {
                         //hint = "Comentario"
-                        setHighlightColor(Color.BLACK)
-                        setTextSize(22f)
+                        highlightColor = Color.BLACK
+                        textSize = 22f
                     }
 
                     negativeButton("Cerrar") {}
