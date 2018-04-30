@@ -55,7 +55,7 @@ class Nuevapubli : AppCompatActivity() {
 
         //boton para subir la imagen
         btnPublish.setOnClickListener { view ->
-            uploadFile()
+            uploadFile(filePathGallery)
         }
 
     }
@@ -90,11 +90,11 @@ class Nuevapubli : AppCompatActivity() {
         return mime.getExtensionFromMimeType(cR.getType(uri))
     }
 
-    private fun uploadFile() {
+    private fun uploadFile(uri: Uri) {
         //si el título está vacío mostrar un toast de información
         if(!etTituloUp.text.isNullOrEmpty()) {
 
-            if (filePathGallery == null) {
+            if (uri == null) {
                 //si no se ha seleccionado ninguna imagen, no se muestra
                 Toast.makeText(applicationContext, "No has seleccionado ninguna imagen", Toast.LENGTH_SHORT).show()
 
@@ -106,10 +106,10 @@ class Nuevapubli : AppCompatActivity() {
                 progressDialog.show()
 
                 //coger la referencia de storage para guardar la foto
-                val sRef = storageReference!!.child("imagesCompressed/" + System.currentTimeMillis() + getFileExtension(filePathGallery))
+                val sRef = storageReference!!.child("imagesCompressed/" + System.currentTimeMillis() + getFileExtension(uri))
 
                 //añadir la imagen al storage
-                sRef.putFile(filePathGallery)
+                sRef.putFile(uri)
                         .addOnSuccessListener { taskSnapshot ->
                             //cuando se sube la imagen se detiene el dialogo de progreso
                             progressDialog.dismiss()
